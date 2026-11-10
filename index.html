@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="mr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#090a10">
+  <meta name="description" content="OMKAR OS — Personal Life Control Center">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
+  <title>OMKAR OS</title>
+</head>
+<body>
+  <div class="ambient"></div>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="OMKAR OS Home"><span class="brand-mark">◈</span><span><b>OMKAR OS</b><small>PERSONAL LIFE CONTROL CENTER</small></span></a>
+    <button id="langBtn" class="icon-button" aria-label="Change language">EN</button>
+  </header>
+
+  <main class="shell">
+    <section class="welcome glass">
+      <div class="eyebrow" data-i18n="overview">PERSONAL OVERVIEW</div>
+      <h1><span data-i18n="hello">Welcome back,</span><br><em>Omkar.</em></h1>
+      <p data-i18n="tagline">Your goals. Your money. Your direction.</p>
+      <div class="date-line" id="todayLine"></div>
+      <div class="quick-stats">
+        <article><span data-i18n="tasksToday">Today's tasks</span><strong id="taskStat">0</strong></article>
+        <article><span data-i18n="dreams">Active dreams</span><strong id="dreamStat">0</strong></article>
+        <article><span data-i18n="notes">Vault notes</span><strong id="noteStat">0</strong></article>
+      </div>
+    </section>
+
+    <nav class="module-nav" aria-label="Main sections">
+      <button class="nav-item active" data-view="home"><span>⌂</span><small data-i18n="home">Home</small></button>
+      <button class="nav-item" data-view="money"><span>₹</span><small data-i18n="money">Money</small></button>
+      <button class="nav-item" data-view="dreams"><span>✧</span><small data-i18n="dreams">Dreams</small></button>
+      <button class="nav-item" data-view="daily"><span>◷</span><small data-i18n="daily">Daily</small></button>
+      <button class="nav-item" data-view="vault"><span>▤</span><small data-i18n="vault">Vault</small></button>
+    </nav>
+
+    <section class="view active" id="view-home">
+      <div class="section-title"><div><div class="eyebrow" data-i18n="workspace">YOUR WORKSPACE</div><h2 data-i18n="dashboard">Dashboard</h2></div><span class="live-dot">● <span data-i18n="local">LOCAL</span></span></div>
+      <div class="home-grid">
+        <button class="feature-card money-card" data-open="money"><span class="feature-icon">₹</span><b data-i18n="moneyManager">Money Manager</b><small data-i18n="moneyDesc">Track income, spending and savings</small><span class="card-arrow">↗</span></button>
+        <button class="feature-card dream-card" data-open="dreams"><span class="feature-icon">✧</span><b data-i18n="dreamTracker">Dream Tracker</b><small data-i18n="dreamDesc">Keep your goals moving forward</small><span class="card-arrow">↗</span></button>
+        <button class="feature-card daily-card" data-open="daily"><span class="feature-icon">◷</span><b data-i18n="dailyCommand">Daily Command</b><small data-i18n="dailyDesc">Plan and complete your day</small><span class="card-arrow">↗</span></button>
+        <button class="feature-card vault-card" data-open="vault"><span class="feature-icon">▤</span><b data-i18n="knowledgeVault">Knowledge Vault</b><small data-i18n="vaultDesc">Save ideas, notes and learning</small><span class="card-arrow">↗</span></button>
+      </div>
+      <div class="panel glass">
+        <div class="panel-head"><div><div class="eyebrow" data-i18n="focus">FOCUS</div><h3 data-i18n="todayFocus">Today's focus</h3></div><span class="spark">✦</span></div>
+        <p class="muted" data-i18n="focusHint">Small progress, repeated daily, builds the bigger picture.</p>
+        <div id="homeTasks" class="compact-list"></div>
+      </div>
+    </section>
+
+    <section class="view" id="view-money">
+      <div class="section-title"><div><div class="eyebrow">MONEY CONTROL</div><h2 data-i18n="moneyManager">Money Manager</h2></div></div>
+      <div class="balance-card glass"><span data-i18n="netBalance">Net balance from entries</span><strong id="balanceValue">₹0</strong><div class="balance-split"><span><small data-i18n="income">Income</small><b id="incomeValue">₹0</b></span><span><small data-i18n="expense">Expenses</small><b id="expenseValue">₹0</b></span></div></div>
+      <form id="moneyForm" class="form-card glass">
+        <h3 data-i18n="addTransaction">Add transaction</h3>
+        <div class="two-col"><label><span data-i18n="type">Type</span><select id="moneyType"><option value="income" data-i18n="income">Income</option><option value="expense" data-i18n="expense">Expense</option></select></label><label><span data-i18n="amount">Amount (₹)</span><input id="moneyAmount" type="number" min="1" step="1" placeholder="e.g. 500" required></label></div>
+        <label><span data-i18n="description">Description</span><input id="moneyDesc" maxlength="70" placeholder="Salary, travel, food..." required></label>
+        <button class="primary-button" type="submit" data-i18n="saveEntry">Save entry</button>
+      </form>
+      <div class="panel glass"><div class="panel-head"><h3 data-i18n="recentTransactions">Recent transactions</h3></div><div id="transactions" class="stack-list empty-hint" data-empty="No transactions yet. Add your first entry."></div></div>
+      <p class="tiny-warning" data-i18n="moneyNotice">Manual tracker only. It does not connect to your bank account.</p>
+    </section>
+
+    <section class="view" id="view-dreams">
+      <div class="section-title"><div><div class="eyebrow">LONG-TERM DIRECTION</div><h2 data-i18n="dreamTracker">Dream Tracker</h2></div></div>
+      <form id="dreamForm" class="form-card glass"><h3 data-i18n="addDream">Add a dream</h3><label><span data-i18n="dreamName">Goal name</span><input id="dreamName" maxlength="70" placeholder="e.g. Build Trinetra" required></label><label><span data-i18n="target">Target / details</span><input id="dreamTarget" maxlength="100" placeholder="Optional"></label><button class="primary-button" type="submit" data-i18n="addGoal">Add goal</button></form>
+      <div id="dreamList" class="stack-list empty-hint" data-empty="No goals yet. Add something meaningful."></div>
+    </section>
+
+    <section class="view" id="view-daily">
+      <div class="section-title"><div><div class="eyebrow">DAILY EXECUTION</div><h2 data-i18n="dailyCommand">Daily Command</h2></div></div>
+      <form id="taskForm" class="form-card glass"><h3 data-i18n="addTask">Add a task</h3><label><span data-i18n="taskName">Task</span><input id="taskName" maxlength="100" placeholder="What needs to get done?" required></label><label><span data-i18n="dueDate">Date</span><input id="taskDate" type="date" required></label><button class="primary-button" type="submit" data-i18n="addTask">Add task</button></form>
+      <div class="panel glass"><div class="panel-head"><h3 data-i18n="yourTasks">Your tasks</h3><span class="muted" id="taskCount">0</span></div><div id="taskList" class="stack-list empty-hint" data-empty="No tasks yet. Add your first task."></div></div>
+    </section>
+
+    <section class="view" id="view-vault">
+      <div class="section-title"><div><div class="eyebrow">IDEAS & KNOWLEDGE</div><h2 data-i18n="knowledgeVault">Knowledge Vault</h2></div></div>
+      <form id="noteForm" class="form-card glass"><h3 data-i18n="saveThought">Save a thought</h3><label><span data-i18n="noteTitle">Title</span><input id="noteTitle" maxlength="80" placeholder="Give this note a title" required></label><label><span data-i18n="content">Content</span><textarea id="noteContent" rows="4" maxlength="5000" placeholder="Write your idea here..." required></textarea></label><button class="primary-button" type="submit" data-i18n="saveNote">Save note</button></form>
+      <div id="noteList" class="stack-list empty-hint" data-empty="Your vault is empty. Save your first idea."></div>
+    </section>
+
+    <section class="backup-panel glass">
+      <div><div class="eyebrow" data-i18n="dataSafety">DATA SAFETY</div><h3 data-i18n="backupTitle">Your data, your control.</h3><p class="muted" data-i18n="backupDesc">Export a backup regularly so you can restore your information.</p></div>
+      <div class="backup-actions"><button id="exportBtn" class="secondary-button" data-i18n="export">↓ Export backup</button><label class="secondary-button file-button"><span data-i18n="import">↑ Import backup</span><input id="importFile" type="file" accept="application/json"></label></div>
+    </section>
+    <footer>OMKAR OS <span>•</span> V1.0 <span>•</span> BUILT FOR YOUR NEXT CHAPTER</footer>
+  </main>
+  <div id="toast" role="status" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>

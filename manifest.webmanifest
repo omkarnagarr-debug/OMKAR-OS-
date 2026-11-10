@@ -1,0 +1,10 @@
+{
+  "name": "OMKAR OS",
+  "short_name": "OMKAR OS",
+  "description": "Personal Life Control Center",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#080910",
+  "theme_color": "#090a10",
+  "icons": []
+}
